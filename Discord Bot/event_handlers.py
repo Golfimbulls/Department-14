@@ -21,6 +21,7 @@ def setup(bot):
     @bot.event
     async def on_ready():
         await on_ready(bot)
+        gui_instance.update_bot_status("Connected", len(bot.guilds))
 
     @bot.event
     async def on_member_join(member):
