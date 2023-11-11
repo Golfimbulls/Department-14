@@ -8,6 +8,11 @@ import config  # Import the config module
 import event_handlers  # Import the event handlers module
 
 def run_bot(token):
+    # Ensure the token is not None or empty
+    if not token:
+        print("No token provided. Exiting.")
+        return
+
     # Set up the bot with intents
     intents = discord.Intents.default()
     intents.members = True
@@ -28,21 +33,26 @@ def run_bot(token):
             log_channel = bot.get_channel(config.LOG_CHANNEL_ID)
             if log_channel:
                 await log_channel.send(f'{bot.user.name} has connected to Discord!')
-                gui.log_message(f'{bot.user.name} has connected to Discord!')
             else:
                 raise ValueError("Log channel not found. Please check the LOG_CHANNEL_ID in config.py.")
         except Exception as e:
-            gui.log_message(f"Error in on_ready: {e}")
+            print(f"Error in on_ready: {e}")
 
     # Run the bot
     try:
         bot.run(token)
     except Exception as e:
-        gui.log_message(f"Error running bot: {e}")
+        print(f"Error running bot: {e}")
+
+def start_gui(run_bot_callback):
+    global gui_instance
+    gui_instance = gui.BotGUI(run_bot_callback)
+    gui_instance.mainloop()
 
 if __name__ == "__main__":
     try:
-        gui_thread = threading.Thread(target=gui.start_gui, args=(run_bot,), daemon=True)
+        # Pass the run_bot function as a callback to the GUI
+        gui_thread = threading.Thread(target=start_gui, args=(run_bot,), daemon=True)
         gui_thread.start()
         gui_thread.join()
     except Exception as e:
