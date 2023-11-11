@@ -5,6 +5,7 @@ import aiohttp
 from bs4 import BeautifulSoup
 import datetime
 import asyncio
+om discord.ext import commands  # Import the correct module
 
 async def fetch_news():
     url = "https://www.ign.com/pc"  # Example URL, replace with your preferred news source
@@ -173,16 +174,14 @@ def register_commands(bot):
             await ctx.send(f"Latest gaming news:\n{news_message}")
         except Exception as e:
             await ctx.send(f"Error fetching news: {e}")
-    
-    @bot.command(name='toggleAutoMod', help='Toggles auto moderation on or off.')
-    @commands.has_permissions(manage_guild=True)
-    async def toggle_auto_mod(ctx):
-        # Logic to toggle auto moderation state
-        # Update state in storage
-        # Respond with the new state
-        pass
 
-    # Add more commands as needed
-    # ...
+@bot.command(name='toggleAutoMod', help='Toggles auto moderation on or off.')
+@commands.has_permissions(manage_guild=True)  # Use the correct decorator
+async def toggle_auto_mod(ctx):
+    # Logic to toggle auto moderation state
+    # Update state in storage
+    # Respond with the new state
+    pass
+   
 
 # Remember to add the register_commands function to your bot in the main.py file
