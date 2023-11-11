@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import scrolledtext, simpledialog, filedialog, Menu
+from tkinter import scrolledtext, simpledialog, filedialog, Menu, Label
 import threading
 import main  # Import the main module
 import token_manager  # Import the token manager
@@ -8,7 +8,7 @@ class BotGUI(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Discord Bot Control Panel")
-        self.geometry("600x450")
+        self.geometry("650x500")  # Adjusted window size
 
         # Black and green color scheme
         self.bg_color = "#000000"  # Black background
@@ -33,17 +33,39 @@ class BotGUI(tk.Tk):
         self.file_menu.add_separator()
         self.file_menu.add_command(label="Save Logs", command=self.save_log)
 
+        # Status Frame
+        self.status_frame = tk.Frame(self, bg=self.bg_color)
+        self.status_frame.pack(padx=10, pady=5, fill='x')
+
+        self.bot_status_label = Label(self.status_frame, text="Bot Status: Disconnected", bg=self.bg_color, fg=self.text_color)
+        self.bot_status_label.pack(side=tk.LEFT, padx=5)
+
+        self.server_count_label = Label(self.status_frame, text="Connected Servers: 0", bg=self.bg_color, fg=self.text_color)
+        self.server_count_label.pack(side=tk.LEFT, padx=5)
+
         # Log Area
         self.log_area = scrolledtext.ScrolledText(self, state='disabled', wrap='word', bg=self.bg_color, fg=self.text_color)
         self.log_area.pack(padx=10, pady=10, fill='both', expand=True)
 
+        # Button Frame
+        self.button_frame = tk.Frame(self, bg=self.bg_color)
+        self.button_frame.pack(padx=10, pady=5)
+
         # Start Bot Button
-        self.start_bot_button = tk.Button(self, text="Start Bot", command=self.start_bot, bg=self.button_color, fg=self.button_text_color)
-        self.start_bot_button.pack(pady=5)
+        self.start_bot_button = tk.Button(self.button_frame, text="Start Bot", command=self.start_bot, bg=self.button_color, fg=self.button_text_color)
+        self.start_bot_button.pack(side=tk.LEFT, padx=5, pady=5)
 
         # Auto Moderation Toggle Button
-        self.auto_mod_button = tk.Button(self, text="Toggle Auto Moderation", command=self.toggle_auto_mod, bg=self.button_color, fg=self.button_text_color)
-        self.auto_mod_button.pack(pady=5)
+        self.auto_mod_button = tk.Button(self.button_frame, text="Toggle Auto Moderation", command=self.toggle_auto_mod, bg=self.button_color, fg=self.button_text_color)
+        self.auto_mod_button.pack(side=tk.LEFT, padx=5, pady=5)
+    
+    def update_bot_status(self, status, server_count=0):
+        """ Updates the bot status and server count on the GUI. """
+        def _update():
+            self.bot_status_label.config(text=f"Bot Status: {status}")
+            self.server_count_label.config(text=f"Connected Servers: {server_count}")
+
+        self.after(0, _update)
     
     def view_token(self):
         token = token_manager.load_token()
@@ -110,3 +132,4 @@ if __name__ == "__main__":
     gui = BotGUI()
     gui_instance = gui
     gui.mainloop()
+    
