@@ -70,8 +70,12 @@ Contributions to this project are welcome. Please follow these steps:
 This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
-If you have any questions or want to reach out, contact me at https://discord.gg/eWp5GCTVUy
+If you have any questions or want to reach out, contact d14 at https://discord.gg/eWp5GCTVUy OR The eg twitter https://twitter.com/evolutionG235
 
 ## Acknowledgments
 - Thanks to everyone who has contributed to this project.
+and are partnar- https://twitter.com/BitriverTV Check them out on twitter and give a follow!!!!!
+
+
+
 - Special thanks to [OpenAI](https://openai.com/) for the language model assistance.
