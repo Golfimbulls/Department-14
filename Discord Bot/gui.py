@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import scrolledtext, simpledialog, filedialog, Menu
+from tkinter import scrolledtext, simpledialog, filedialog, Menu, Label, Entry, Button
 import threading
 import main  # Import the main module
 import token_manager  # Import the token manager
@@ -8,7 +8,7 @@ class BotGUI(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Discord Bot Control Panel")
-        self.geometry("600x450")
+        self.geometry("650x500")  # Adjusted window size
 
         # Black and green color scheme
         self.bg_color = "#000000"  # Black background
@@ -33,17 +33,68 @@ class BotGUI(tk.Tk):
         self.file_menu.add_separator()
         self.file_menu.add_command(label="Save Logs", command=self.save_log)
 
+        # Bot Control Frame
+        self.bot_control_frame = tk.Frame(self, bg=self.bg_color)
+        self.bot_control_frame.pack(padx=10, pady=5)
+
+        # Bot Status Control
+        self.status_var = tk.StringVar(self)
+        self.status_options = ['online', 'idle', 'invisible']
+        self.status_menu = tk.OptionMenu(self.bot_control_frame, self.status_var, *self.status_options, command=self.change_bot_status)
+        self.status_menu.config(bg=self.button_color, fg=self.button_text_color)
+        self.status_menu.pack(side=tk.LEFT, padx=5, pady=5)
+        
+        # Log Channel ID Entry
+        self.log_channel_id_label = Label(self.bot_control_frame, text="Log Channel ID:", bg=self.bg_color, fg=self.text_color)
+        self.log_channel_id_label.pack(side=tk.LEFT, padx=5)
+        self.log_channel_id_entry = Entry(self.bot_control_frame, bg=self.bg_color, fg=self.text_color)
+        self.log_channel_id_entry.pack(side=tk.LEFT, padx=5)
+
+        # Channel ID Entry
+        self.channel_id_label = Label(self.bot_control_frame, text="Channel ID:", bg=self.bg_color, fg=self.text_color)
+        self.channel_id_label.pack(side=tk.LEFT, padx=5)
+        self.channel_id_entry = Entry(self.bot_control_frame, bg=self.bg_color, fg=self.text_color)
+        self.channel_id_entry.pack(side=tk.LEFT, padx=5)
+        self.set_channel_button = Button(self.bot_control_frame, text="Set Channel", command=self.set_channel, bg=self.button_color, fg=self.button_text_color)
+        self.set_channel_button.pack(side=tk.LEFT, padx=5)
+
         # Log Area
         self.log_area = scrolledtext.ScrolledText(self, state='disabled', wrap='word', bg=self.bg_color, fg=self.text_color)
         self.log_area.pack(padx=10, pady=10, fill='both', expand=True)
 
+        # Button Frame
+        self.button_frame = tk.Frame(self, bg=self.bg_color)
+        self.button_frame.pack(padx=10, pady=5)
+
         # Start Bot Button
-        self.start_bot_button = tk.Button(self, text="Start Bot", command=self.start_bot, bg=self.button_color, fg=self.button_text_color)
-        self.start_bot_button.pack(pady=5)
+        self.start_bot_button = tk.Button(self.button_frame, text="Start Bot", command=self.start_bot, bg=self.button_color, fg=self.button_text_color)
+        self.start_bot_button.pack(side=tk.LEFT, padx=5, pady=5)
 
         # Auto Moderation Toggle Button
-        self.auto_mod_button = tk.Button(self, text="Toggle Auto Moderation", command=self.toggle_auto_mod, bg=self.button_color, fg=self.button_text_color)
-        self.auto_mod_button.pack(pady=5)
+        self.auto_mod_button = tk.Button(self.button_frame, text="Toggle Auto Moderation", command=self.toggle_auto_mod, bg=self.button_color, fg=self.button_text_color)
+        self.auto_mod_button.pack(side=tk.LEFT, padx=5, pady=5)
+        
+    def change_bot_status(self, status):
+        """ Change the bot's status (online, idle, invisible). """
+        # Implement the logic to change the bot's status
+        main.update_bot_status(status)
+        self.log_message(f"Bot status set to {status}")
+
+    def set_channel(self):
+        """ Set the channel ID for the bot to enter. """
+        channel_id = self.channel_id_entry.get()
+        if channel_id:
+            # Implement the logic to set the bot's channel
+            main.set_channel(channel_id)
+            self.log_message(f"Channel set to {channel_id}")
+    
+    def update_bot_status(self, status, server_count=0):
+        """ Updates the bot status and server count on the GUI. """
+        def _update():
+            self.bot_status_label.config(text=f"Bot Status: {status}")
+            self.server_count_label.config(text=f"Connected Servers: {server_count}")
+
+        self.after(0, _update)
     
     def view_token(self):
         token = token_manager.load_token()
@@ -82,7 +133,8 @@ class BotGUI(tk.Tk):
             else:
                 self.log_message("No token provided. Exiting.")
                 return
-        threading.Thread(target=main.run_bot, args=(self,), daemon=True).start()
+        log_channel_id = self.log_channel_id_entry.get()
+        threading.Thread(target=main.run_bot, args=(token, log_channel_id), daemon=True).start()
         self.log_message("Bot started.")
 
     def log_message(self, message):
@@ -110,3 +162,4 @@ if __name__ == "__main__":
     gui = BotGUI()
     gui_instance = gui
     gui.mainloop()
+    

@@ -1,3 +1,3 @@
 discord.py==1.7.3
-aiohttp==3.8.1
+aiohttp==3.7.4  # Adjusted to a compatible version
 beautifulsoup4==4.10.0

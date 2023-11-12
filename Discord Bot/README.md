@@ -1,8 +1,7 @@
 # Discord Bot Project
 
 ## Description
-This project is a Discord bot designed to provide various functionalities for gaming communities. It includes features like dice rolling, character generation for D&D, game session scheduling, polls, game statistics, and the latest gaming news. Still Being Debugged.       
- Bot version Pre-Alpha . 
+This project is a Discord bot designed to provide various functionalities for gaming communities. It includes features like dice rolling, character generation for D&D, game session scheduling, polls, game statistics, and the latest gaming news.
 
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
@@ -66,17 +65,14 @@ Contributions to this project are welcome. Please follow these steps:
 4. Push to the original branch: `git push origin <project_name>/<location>`.
 5. Create the pull request.
 
+Alternatively, see the GitHub documentation on [creating a pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
-If you have any questions or want to reach out, contact d14 at https://discord.gg/eWp5GCTVUy OR The eg twitter https://twitter.com/evolutionG235
+If you have any questions or want to reach out, contact me at `<your_email>`.
 
 ## Acknowledgments
 - Thanks to everyone who has contributed to this project.
-and are partnar- https://twitter.com/BitriverTV Check them out on twitter and give a follow!!!!!
-
-
-
 - Special thanks to [OpenAI](https://openai.com/) for the language model assistance.

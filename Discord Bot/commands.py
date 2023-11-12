@@ -5,7 +5,16 @@ import aiohttp
 from bs4 import BeautifulSoup
 import datetime
 import asyncio
-om discord.ext import commands  # Import the correct module
+from discord.ext import commands
+
+def convert_to_uwu(text):
+    uwu_text = text
+    # Replace 'r' and 'l' with 'w'
+    uwu_text = uwu_text.replace("r", "w").replace("l", "w")
+    # Replace 'R' and 'L' with 'W'
+    uwu_text = uwu_text.replace("R", "W").replace("L", "W")
+    # Add more transformations as needed
+    return uwu_text
 
 async def fetch_news():
     url = "https://www.ign.com/pc"  # Example URL, replace with your preferred news source
@@ -43,6 +52,11 @@ async def fetch_ducat_prices():
 
 # Function to register all commands to the bot
 def register_commands(bot):
+    @bot.command(name='uwu')
+    async def uwu_command(ctx, *, message: str):
+        uwu_message = convert_to_uwu(message)
+        await ctx.send(uwu_message)
+    
     @bot.command(name='roll', help='Rolls a dice in NdN format.')
     async def roll(ctx, dice: str):
         """Rolls a dice using NdN format. For example, '2d6' rolls two 6-sided dice."""
@@ -174,14 +188,16 @@ def register_commands(bot):
             await ctx.send(f"Latest gaming news:\n{news_message}")
         except Exception as e:
             await ctx.send(f"Error fetching news: {e}")
+    
+    @bot.command(name='toggleAutoMod', help='Toggles auto moderation on or off.')
+    @commands.has_permissions(manage_guild=True)
+    async def toggle_auto_mod(ctx):
+        # Logic to toggle auto moderation state
+        # Update state in storage
+        # Respond with the new state
+        pass
 
-@bot.command(name='toggleAutoMod', help='Toggles auto moderation on or off.')
-@commands.has_permissions(manage_guild=True)  # Use the correct decorator
-async def toggle_auto_mod(ctx):
-    # Logic to toggle auto moderation state
-    # Update state in storage
-    # Respond with the new state
-    pass
-   
+    # Add more commands as needed
+    # ...
 
 # Remember to add the register_commands function to your bot in the main.py file
