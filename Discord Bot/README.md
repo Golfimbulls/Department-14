@@ -1,7 +1,7 @@
 # Discord Bot Project
 
 ## Description
-This project is a Discord bot designed to provide various functionalities for gaming communities. It includes features like dice rolling, character generation for D&D, game session scheduling, polls, game statistics, and the latest gaming news.
+This project is a Discord bot designed to provide various functionalities for gaming communities. It includes features like dice rolling, character generation for D&D, game session scheduling, polls, game statistics, and the latest gaming news. Still Being Debugged.
 
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
