@@ -2,7 +2,7 @@
 
 ## Description
 This project is a Discord bot designed to provide various functionalities for gaming communities. It includes features like dice rolling, character generation for D&D, game session scheduling, polls, game statistics, and the latest gaming news.
-
+Still in development.
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
 - Python 3.8 or higher installed on your machine.
