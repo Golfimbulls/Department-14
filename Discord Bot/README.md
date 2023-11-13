@@ -11,42 +11,58 @@ Before you begin, ensure you have met the following requirements:
 ## Installation
 
 1. **Clone the Repository**
-git clone https://github.com/your-username/your-project-name.git
-cd your-project-name
+   ```
+   git clone https://github.com/your-username/your-project-name.git
+   cd your-project-name
+   ```
 
 2. **Set Up a Virtual Environment (Optional but Recommended)**
-- Windows:
-  ```
-  python -m venv venv
-  .\venv\Scripts\activate
-  ```
-- macOS/Linux:
-  ```
-  python3 -m venv venv
-  source venv/bin/activate
-  ```
+   - Windows:
+     ```
+     python -m venv venv
+     .\venv\Scripts\activate
+     ```
+   - macOS/Linux:
+     ```
+     python3 -m venv venv
+     source venv/bin/activate
+     ```
 
 3. **Install Dependencies**
-pip install -r requirements.txt
-
-4. **Add Your Discord Bot Token**
-- Create a file named `.env` in the root directory.
-- Add your bot token in the file:
-  ```
-  DISCORD_TOKEN=your_bot_token_here
-  ```
+   ```
+   pip install -r requirements.txt
+   ```
 
 ## Usage
 
 1. **Start the Bot**
-- Run the bot using the following command:
-  ```
-  python main.py
-  ```
+   - Run the bot using the following command:
+     ```
+     python main.py
+     ```
 
 2. **Using the Bot in Discord**
-- Invite the bot to your Discord server.
-- Use the bot commands in your server. For example, type `!roll 2d6` to roll two six-sided dice.
+   - Invite the bot to your Discord server.
+   - Use the bot commands in your server. For example, type `!roll 2d6` to roll two six-sided dice.
+
+## Building an Executable
+To build an executable version of your bot for easy distribution and execution:
+
+1. **Install PyInstaller**
+   ```
+   pip install pyinstaller
+   ```
+
+2. **Build the Executable**
+   - Navigate to your project directory.
+   - Run the following command:
+     ```
+     pyinstaller --onefile main.py
+     ```
+   - This will create a `dist` folder in your project directory containing the `main.exe` file.
+
+3. **Run the Executable**
+   - You can now run your bot using the executable file in the `dist` folder.
 
 ## Features
 - Dice rolling with `!roll` command.
