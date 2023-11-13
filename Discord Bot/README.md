@@ -17,16 +17,16 @@ Before you begin, ensure you have met the following requirements:
    ```
 
 2. **Set Up a Virtual Environment (Optional but Recommended)**
-   - Windows:
-     ```
-     python -m venv venv
-     .\venv\Scripts\activate
-     ```
-   - macOS/Linux:
-     ```
-     python3 -m venv venv
-     source venv/bin/activate
-     ```
+- Windows:
+  ```
+  python -m venv venv
+  .\venv\Scripts\activate
+  ```
+- macOS/Linux:
+  ```
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
 
 3. **Install Dependencies**
    ```
@@ -36,14 +36,15 @@ Before you begin, ensure you have met the following requirements:
 ## Usage
 
 1. **Start the Bot**
-   - Run the bot using the following command:
-     ```
-     python main.py
-     ```
+- Run the bot using the following command:
+  ```
+  python gui.py
+  ```
+- This command starts the bot through the GUI interface.
 
 2. **Using the Bot in Discord**
-   - Invite the bot to your Discord server.
-   - Use the bot commands in your server. For example, type `!roll 2d6` to roll two six-sided dice.
+- Invite the bot to your Discord server.
+- Use the bot commands in your server. For example, type `!roll 2d6` to roll two six-sided dice.
 
 ## Building an Executable
 To build an executable version of your bot for easy distribution and execution:
@@ -54,15 +55,16 @@ To build an executable version of your bot for easy distribution and execution:
    ```
 
 2. **Build the Executable**
-   - Navigate to your project directory.
-   - Run the following command:
-     ```
-     pyinstaller --onefile main.py
-     ```
-   - This will create a `dist` folder in your project directory containing the `main.exe` file.
+- Navigate to your project directory.
+- Run the following command:
+  ```
+  pyinstaller --hidden-import=requests gui.py
+  ```
+- This command includes the `requests` module as a hidden import, ensuring it's packaged with the executable.
+- This will create a `dist` folder in your project directory containing the `gui.exe` file.
 
 3. **Run the Executable**
-   - You can now run your bot using the executable file in the `dist` folder.
+- You can now run your bot using the executable file in the `dist` folder.
 
 ## Features
 - Dice rolling with `!roll` command.
