@@ -55,19 +55,19 @@ async def fetch_ducat_prices():
 
             return ducat_data
         
-    async def fetch_weather(city):
-        # Replace with your weather API URL and key
-        url = f"http://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q={city}"
-        response = requests.get(url)
-        return response.json()
+async def fetch_weather(city):
+    # Replace with your weather API URL and key
+    url = f"http://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q={city}"
+    response = requests.get(url)
+    return response.json()
 
-    async def fetch_quote():
-        response = requests.get("https://api.quotable.io/random")
-        return response.json()
+async def fetch_quote():
+    response = requests.get("https://api.quotable.io/random")
+    return response.json()
 
-    async def fetch_meme():
-        response = requests.get("https://meme-api.herokuapp.com/gimme")
-        return response.json()
+async def fetch_meme():
+    response = requests.get("https://meme-api.herokuapp.com/gimme")
+    return response.json()
 
 # Function to register all commands to the bot
 def register_commands(bot):
