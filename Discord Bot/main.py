@@ -12,21 +12,21 @@ import gui  # Import the GUI module
 bot = None
 loop = None
 
+# Initialize logger
+logger = bot_logging.get_logger(__name__)
+
 def run_bot(token, log_channel_id=None):
     global bot, loop
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
 
     if not token or not isinstance(token, str):
-        print("Invalid or no token provided. Exiting.")
+        logger.error("Invalid or no token provided. Exiting.")
         return
 
     intents = discord.Intents.default()
     intents.members = True  # If you've enabled "Server Members Intent"
     intents.message_content = True  # If you've enabled "Message Content Intent"
-    bot = commands.Bot(command_prefix='!', intents=intents)
-
-
     bot = commands.Bot(command_prefix='!', intents=intents)
     loop = asyncio.get_event_loop()
 
@@ -42,12 +42,12 @@ def run_bot(token, log_channel_id=None):
             else:
                 raise ValueError("Log channel not found. Please check the LOG_CHANNEL_ID in config.py.")
         except Exception as e:
-            print(f"Error in on_ready: {e}")
+            logger.exception("Error in on_ready")
 
     try:
         bot.run(token)
     except Exception as e:
-        print(f"Error running bot: {e}")
+        logger.exception("Error running bot")
 
 def start_gui(run_bot_callback):
     global gui_instance
@@ -89,4 +89,4 @@ if __name__ == "__main__":
         gui_thread.start()
         gui_thread.join()
     except Exception as e:
-        print(f"Error starting GUI thread: {e}")
+        logger.exception("Error starting GUI thread")
