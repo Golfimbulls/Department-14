@@ -21,6 +21,7 @@ def setup(bot):
     @bot.event
     async def on_ready():
         await on_ready(bot)
+        gui_instance.update_bot_status("Connected", len(bot.guilds))
 
     @bot.event
     async def on_member_join(member):
@@ -37,3 +38,8 @@ def setup(bot):
     @bot.event
     async def on_message_edit(before, after):
         await on_message_edit(before, after)
+
+    @bot.event
+    async def on_ready():
+        await bot.change_presence(status=discord.Status.online, activity=discord.Game("Type !help"))
+        print(f'{bot.user.name} has connected to Discord!')
