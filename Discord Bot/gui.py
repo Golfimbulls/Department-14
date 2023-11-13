@@ -184,7 +184,7 @@ class BotGUI(tk.Tk):
         self.after(30000, self.update_lists_periodically)  # Update every 30 seconds
 
     def update_server_list(self):
-        server_data = main.get_server_list()
+        server_data = main.get_server_list_sync()
         self.server_list.delete(0, tk.END)  # Clear existing list
         for server_name, server_id, member_count in server_data:
             self.server_list.insert(tk.END, f"{server_name} (ID: {server_id}, Members: {member_count})")

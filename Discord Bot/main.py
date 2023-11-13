@@ -103,6 +103,30 @@ def set_channel(channel_id):
     """ Wrapper to run the asynchronous set_bot_channel function. """
     if loop and bot:
         asyncio.run_coroutine_threadsafe(set_bot_channel(channel_id), loop)
+        
+async def get_server_list():
+    """ Fetch the list of servers the bot is connected to. """
+    if bot:
+        try:
+            guilds = bot.guilds
+            return [(guild.name, guild.id, guild.member_count) for guild in guilds]
+        except discord.HTTPException as e:
+            if e.status == 429:
+                # Handle rate limit exceeded
+                logger.warning("Rate limit exceeded while fetching server list. Retrying later.")
+                # Optionally, implement a retry mechanism
+            else:
+                # Handle other HTTP exceptions
+                logger.error(f"HTTP error occurred while fetching server list: {e}")
+        except Exception as e:
+            # Handle other exceptions
+            logger.error(f"Error occurred while fetching server list: {e}")
+    return []
+
+def get_server_list_sync():
+    """ Synchronous wrapper for the asynchronous get_server_list function. """
+    if loop and bot:
+        return asyncio.run_coroutine_threadsafe(get_server_list(), loop).result()
 
 if __name__ == "__main__":
     try:
