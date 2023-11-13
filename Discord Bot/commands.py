@@ -6,6 +6,11 @@ from bs4 import BeautifulSoup
 import datetime
 import asyncio
 from discord.ext import commands
+import requests
+import json
+
+# Global dictionary to store auto-moderation state for each server
+auto_mod_states = {}
 
 def convert_to_uwu(text):
     uwu_text = text
@@ -49,6 +54,20 @@ async def fetch_ducat_prices():
                 ducat_data[name] = ducat_value
 
             return ducat_data
+        
+async def fetch_weather(city):
+    # Replace with your weather API URL and key
+    url = f"http://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q={city}"
+    response = requests.get(url)
+    return response.json()
+
+async def fetch_quote():
+    response = requests.get("https://api.quotable.io/random")
+    return response.json()
+
+async def fetch_meme():
+    response = requests.get("https://meme-api.herokuapp.com/gimme")
+    return response.json()
 
 # Function to register all commands to the bot
 def register_commands(bot):
@@ -192,10 +211,73 @@ def register_commands(bot):
     @bot.command(name='toggleAutoMod', help='Toggles auto moderation on or off.')
     @commands.has_permissions(manage_guild=True)
     async def toggle_auto_mod(ctx):
-        # Logic to toggle auto moderation state
-        # Update state in storage
+        """Toggles auto moderation on or off."""
+        guild_id = ctx.guild.id
+
+        # Toggle the auto-moderation state
+        if guild_id in auto_mod_states:
+            auto_mod_states[guild_id] = not auto_mod_states[guild_id]
+        else:
+            auto_mod_states[guild_id] = True  # Enable auto-moderation if it's the first time
+
         # Respond with the new state
-        pass
+        state = "enabled" if auto_mod_states[guild_id] else "disabled"
+        await ctx.send(f"Auto-moderation is now {state}.")
+
+    @bot.command(name='weather', help='Shows current weather for a city.')
+    async def weather(ctx, *, city: str):
+        """Shows current weather for a specified city."""
+        weather_data = await fetch_weather(city)
+        if 'error' in weather_data:
+            await ctx.send("Couldn't fetch weather data. Please try again.")
+        else:
+            description = weather_data['current']['condition']['text']
+            temperature = weather_data['current']['temp_c']
+            await ctx.send(f"Weather in {city}: {description}, {temperature}°C")
+
+    @bot.command(name='quote', help='Displays an inspirational quote.')
+    async def quote(ctx):
+        """Displays an inspirational quote of the day."""
+        quote_data = await fetch_quote()
+        await ctx.send(f"{quote_data['content']} - {quote_data['author']}")
+
+    @bot.command(name='serverinfo', help='Displays information about the server.')
+    async def serverinfo(ctx):
+        """Displays information about the server."""
+        server = ctx.guild
+        num_text_channels = len(server.text_channels)
+        num_voice_channels = len(server.voice_channels)
+        num_members = server.member_count
+        server_description = server.description
+        embed = discord.Embed(title=f"{server.name} Information", description=server_description or "No description")
+        embed.add_field(name="Member Count", value=num_members)
+        embed.add_field(name="Text Channels", value=num_text_channels)
+        embed.add_field(name="Voice Channels", value=num_voice_channels)
+        await ctx.send(embed=embed)
+
+    @bot.command(name='userinfo', help='Displays information about a user.')
+    async def userinfo(ctx, member: discord.Member):
+        """Displays information about a user."""
+        roles = [role.name for role in member.roles]
+        embed = discord.Embed(title=f"{member.name}'s Information", description=f"Roles: {', '.join(roles)}")
+        embed.add_field(name="Joined at", value=member.joined_at.strftime("%Y-%m-%d %H:%M:%S"))
+        embed.add_field(name="Created at", value=member.created_at.strftime("%Y-%m-%d %H:%M:%S"))
+        await ctx.send(embed=embed)
+
+    @bot.command(name='reminder', help='Sets a reminder.')
+    async def reminder(ctx, time: int, *, reminder: str):
+        """Sets a reminder for the user."""
+        await ctx.send(f"Reminder set for {time} minutes. I will remind you about: {reminder}")
+        await asyncio.sleep(time * 60)
+        await ctx.send(f"Hey {ctx.author.mention}, remember to: {reminder}")
+
+    @bot.command(name='meme', help='Displays a random meme.')
+    async def meme(ctx):
+        """Fetches and displays a random meme."""
+        meme_data = await fetch_meme()
+        embed = discord.Embed(title=meme_data['title'])
+        embed.set_image(url=meme_data['url'])
+        await ctx.send(embed=embed)
 
     # Add more commands as needed
     # ...
