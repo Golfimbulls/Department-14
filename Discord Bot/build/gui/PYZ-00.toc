@@ -1,4 +1,5 @@
-('C:\\Users\\RhythmicCarnage\\Desktop\\Discord Bot\\build\\gui\\PYZ-00.pyz',
+('C:\\Users\\RhythmicCarnage\\Documents\\GitHub\\Department-14\\Discord '
+ 'Bot\\build\\gui\\PYZ-00.pyz',
  [('__future__',
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\__future__.py',
    'PYMODULE'),
@@ -303,7 +304,8 @@
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\bisect.py',
    'PYMODULE'),
   ('bot_logging',
-   'C:\\Users\\RhythmicCarnage\\Desktop\\Discord Bot\\bot_logging.py',
+   'C:\\Users\\RhythmicCarnage\\Documents\\GitHub\\Department-14\\Discord '
+   'Bot\\bot_logging.py',
    'PYMODULE'),
   ('bs4',
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\bs4\\__init__.py',
@@ -366,7 +368,8 @@
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\colorsys.py',
    'PYMODULE'),
   ('commands',
-   'C:\\Users\\RhythmicCarnage\\Desktop\\Discord Bot\\commands.py',
+   'C:\\Users\\RhythmicCarnage\\Documents\\GitHub\\Department-14\\Discord '
+   'Bot\\commands.py',
    'PYMODULE'),
   ('concurrent',
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\concurrent\\__init__.py',
@@ -835,7 +838,8 @@
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\email\\utils.py',
    'PYMODULE'),
   ('event_handlers',
-   'C:\\Users\\RhythmicCarnage\\Desktop\\Discord Bot\\event_handlers.py',
+   'C:\\Users\\RhythmicCarnage\\Documents\\GitHub\\Department-14\\Discord '
+   'Bot\\event_handlers.py',
    'PYMODULE'),
   ('fnmatch',
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\fnmatch.py',
@@ -859,7 +863,8 @@
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\gettext.py',
    'PYMODULE'),
   ('gui',
-   'C:\\Users\\RhythmicCarnage\\Desktop\\Discord Bot\\gui.py',
+   'C:\\Users\\RhythmicCarnage\\Documents\\GitHub\\Department-14\\Discord '
+   'Bot\\gui.py',
    'PYMODULE'),
   ('gzip',
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\gzip.py',
@@ -982,7 +987,8 @@
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\lzma.py',
    'PYMODULE'),
   ('main',
-   'C:\\Users\\RhythmicCarnage\\Desktop\\Discord Bot\\main.py',
+   'C:\\Users\\RhythmicCarnage\\Documents\\GitHub\\Department-14\\Discord '
+   'Bot\\main.py',
    'PYMODULE'),
   ('mimetypes',
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\mimetypes.py',
@@ -1210,7 +1216,8 @@
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\token.py',
    'PYMODULE'),
   ('token_manager',
-   'C:\\Users\\RhythmicCarnage\\Desktop\\Discord Bot\\token_manager.py',
+   'C:\\Users\\RhythmicCarnage\\Documents\\GitHub\\Department-14\\Discord '
+   'Bot\\token_manager.py',
    'PYMODULE'),
   ('tokenize',
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\tokenize.py',

@@ -3,6 +3,8 @@ from discord.ext import commands
 
 async def on_ready(bot):
     print(f'{bot.user.name} has connected to Discord!')
+    await bot.change_presence(status=discord.Status.online, activity=discord.Game("Type !help"))
+    gui_instance.update_bot_status("Connected", len(bot.guilds))
 
 async def on_member_join(member):
     print(f'{member.name} has joined the server.')
@@ -18,11 +20,6 @@ async def on_message_edit(before, after):
         print(f'Message by {before.author.display_name} was edited.')
 
 def setup(bot):
-    @bot.event
-    async def on_ready():
-        await on_ready(bot)
-        gui_instance.update_bot_status("Connected", len(bot.guilds))
-
     @bot.event
     async def on_member_join(member):
         await on_member_join(member)
@@ -41,5 +38,4 @@ def setup(bot):
 
     @bot.event
     async def on_ready():
-        await bot.change_presence(status=discord.Status.online, activity=discord.Game("Type !help"))
-        print(f'{bot.user.name} has connected to Discord!')
+        await on_ready(bot)
