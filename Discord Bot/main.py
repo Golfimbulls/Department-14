@@ -78,6 +78,27 @@ async def set_bot_channel(channel_id):
             # For example, sending a message to the channel
             await channel.send("Bot has entered the channel.")
 
+async def get_online_users_in_channel(channel_id):
+    """ Fetch online users in a specific channel with rate limit handling. """
+    if bot:
+        channel = bot.get_channel(int(channel_id))
+        if channel:
+            try:
+                # Attempt to fetch members
+                return [member.name for member in channel.members if str(member.status) == 'online']
+            except discord.HTTPException as e:
+                if e.status == 429:
+                    # Handle rate limit exceeded
+                    logger.warning("Rate limit exceeded. Retrying later.")
+                    # Optionally, implement a retry mechanism
+                else:
+                    # Handle other HTTP exceptions
+                    logger.error(f"HTTP error occurred: {e}")
+            except Exception as e:
+                # Handle other exceptions
+                logger.error(f"Error occurred: {e}")
+    return []
+
 def set_channel(channel_id):
     """ Wrapper to run the asynchronous set_bot_channel function. """
     if loop and bot:

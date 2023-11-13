@@ -1,9 +1,8 @@
 import tkinter as tk
-from tkinter import scrolledtext, simpledialog, filedialog, Menu, Label, Entry, Button, messagebox
+from tkinter import ttk, scrolledtext, simpledialog, filedialog, Menu, Label, Entry, Button, messagebox
 import threading
 import main  # Import the main module
 import token_manager  # Import the token manager
-
 
 class Tooltip:
     """
@@ -59,7 +58,7 @@ class BotGUI(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Discord Bot Control Panel")
-        self.geometry("650x550")  # Increased window height
+        self.geometry("700x700")  # Window size controls
 
         # Black and green color scheme
         self.bg_color = "#000000"  # Black background
@@ -119,9 +118,33 @@ class BotGUI(tk.Tk):
         self.set_channel_button = Button(self.channel_id_frame, text="Set Channel", command=self.set_channel, bg=self.button_color, fg=self.button_text_color)
         self.set_channel_button.pack(side=tk.LEFT, padx=5)
 
-        # Log Area
-        self.log_area = scrolledtext.ScrolledText(self, state='disabled', wrap='word', bg=self.bg_color, fg=self.text_color)
+        # Create Notebook (Tab Control)
+        self.tab_control = ttk.Notebook(self)
+        self.tab_control.pack(expand=1, fill="both")
+
+        # Tab 1: Log Area
+        self.log_tab = tk.Frame(self.tab_control, bg=self.bg_color)
+        self.tab_control.add(self.log_tab, text='Log')
+        self.log_area = scrolledtext.ScrolledText(self.log_tab, state='disabled', wrap='word', bg=self.bg_color, fg=self.text_color)
         self.log_area.pack(padx=10, pady=10, fill='both', expand=True)
+
+        # Tab 2: User and Server List
+        self.user_server_tab = tk.Frame(self.tab_control, bg=self.bg_color)
+        self.tab_control.add(self.user_server_tab, text='Users & Servers')
+
+        # User List
+        self.user_list_label = tk.Label(self.user_server_tab, text="Users", bg=self.bg_color, fg=self.text_color)
+        self.user_list_label.pack(pady=(10, 0))
+        self.user_list = tk.Listbox(self.user_server_tab, bg=self.bg_color, fg=self.text_color)
+        self.user_list.pack(padx=10, pady=5, fill='both', expand=True)
+        # Populate the user list here with user details
+
+        # Server List
+        self.server_list_label = tk.Label(self.user_server_tab, text="Servers", bg=self.bg_color, fg=self.text_color)
+        self.server_list_label.pack(pady=(10, 0))
+        self.server_list = tk.Listbox(self.user_server_tab, bg=self.bg_color, fg=self.text_color)
+        self.server_list.pack(padx=10, pady=5, fill='both', expand=True)
+        # Populate the server list here with server details
 
         # Button Frame
         self.button_frame = tk.Frame(self, bg=self.bg_color)
@@ -146,6 +169,25 @@ class BotGUI(tk.Tk):
         Tooltip(self.set_channel_button, "Set the bot to use the specified channel.")
         Tooltip(self.start_bot_button, "Start the Discord bot.")
         Tooltip(self.auto_mod_button, "Toggle automatic moderation features.")
+    
+    def update_user_list(self):
+        channel_id = self.log_channel_id_entry.get()
+        if channel_id:
+            online_users = main.get_online_users_in_channel(channel_id)
+            self.user_list.delete(0, tk.END)  # Clear existing list
+            for user in online_users:
+                self.user_list.insert(tk.END, user)
+    
+    def update_lists_periodically(self):
+        self.update_user_list()
+        self.update_server_list()
+        self.after(30000, self.update_lists_periodically)  # Update every 30 seconds
+
+    def update_server_list(self):
+        server_data = main.get_server_list()
+        self.server_list.delete(0, tk.END)  # Clear existing list
+        for server_name, server_id, member_count in server_data:
+            self.server_list.insert(tk.END, f"{server_name} (ID: {server_id}, Members: {member_count})")
         
     def change_bot_status(self, status):
         """ Change the bot's status (online, idle, invisible). """
