@@ -8,6 +8,7 @@ import asyncio
 from discord.ext import commands
 import requests
 import json
+from bot_logging import log_message, log_exception  # Import logging functions
 
 # Global dictionary to store auto-moderation state for each server
 auto_mod_states = {}
@@ -21,15 +22,24 @@ def convert_to_uwu(text):
     # Add more transformations as needed
     return uwu_text
 
-async def fetch_news():
-    url = "https://www.ign.com/pc"  # Example URL, replace with your preferred news source
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            html = await response.text()
-            soup = BeautifulSoup(html, 'html.parser')
-            news_items = soup.find_all('div', class_='content-item')  # Adjust this according to the website's HTML structure
-            news_titles = [item.find('a').get_text(strip=True) for item in news_items if item.find('a')]
-            return news_titles[:5]  # Return the top 5 news titles
+async def fetch_news(url="https://www.ign.com/pc", item_selector='div.content-item', title_selector='a', max_items=5, timeout=10):
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
+        async with aiohttp.ClientSession(headers=headers) as session:
+            async with session.get(url, timeout=timeout) as response:
+                if response.status == 200:
+                    html = await response.text()
+                    soup = BeautifulSoup(html, 'html.parser')
+                    news_items = soup.select(item_selector)
+                    news_titles = [item.select_one(title_selector).get_text(strip=True) for item in news_items if item.select_one(title_selector)]
+                    await log_message(f"Fetched {len(news_titles)} news titles successfully.", logging.INFO)
+                    return news_titles[:max_items]
+                else:
+                    await log_message(f"Failed to fetch news: HTTP {response.status}", logging.ERROR)
+                    return []
+    except Exception as e:
+        await log_exception(e)
+        return []
 
 async def fetch_ducat_prices():
     url = "https://warframe.market/tools/ducats"
