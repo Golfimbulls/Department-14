@@ -173,10 +173,13 @@ class BotGUI(tk.Tk):
     def update_user_list(self):
         channel_id = self.log_channel_id_entry.get()
         if channel_id:
-            online_users = main.get_online_users_in_channel(channel_id)
-            self.user_list.delete(0, tk.END)  # Clear existing list
-            for user in online_users:
-                self.user_list.insert(tk.END, user)
+            try:
+                online_users = main.get_online_users_in_channel(channel_id)
+                self.user_list.delete(0, tk.END)  # Clear existing list
+                for user in online_users:
+                    self.user_list.insert(tk.END, user)
+            except Exception as e:
+                self.log_message(f"Error updating user list: {e}")
     
     def update_lists_periodically(self):
         self.update_user_list()
@@ -184,24 +187,42 @@ class BotGUI(tk.Tk):
         self.after(30000, self.update_lists_periodically)  # Update every 30 seconds
 
     def update_server_list(self):
-        server_data = main.get_server_list_sync()
-        self.server_list.delete(0, tk.END)  # Clear existing list
-        for server_name, server_id, member_count in server_data:
-            self.server_list.insert(tk.END, f"{server_name} (ID: {server_id}, Members: {member_count})")
+        try:
+            server_data = main.get_server_list_sync()
+            self.server_list.delete(0, tk.END)  # Clear existing list
+            for server_name, server_id, member_count in server_data:
+                self.server_list.insert(tk.END, f"{server_name} (ID: {server_id}, Members: {member_count})")
+        except Exception as e:
+            self.log_message(f"Error updating server list: {e}")
         
     def change_bot_status(self, status):
         """ Change the bot's status (online, idle, invisible). """
-        # Implement the logic to change the bot's status
-        main.update_bot_status(status)
-        self.log_message(f"Bot status set to {status}")
+        try:
+            # Call the update_bot_status function from main.py
+            main.update_bot_status(status)
+            self.log_message(f"Bot status set to {status}")
+        except Exception as e:
+            # Log any exceptions that occur
+            self.log_message(f"Error changing bot status: {e}")
 
     def set_channel(self):
         """ Set the channel ID for the bot to enter. """
-        channel_id = self.channel_id_entry.get()
+        channel_id = self.channel_id_entry.get().strip()
         if channel_id:
-            # Implement the logic to set the bot's channel
-            main.set_channel(channel_id)
-            self.log_message(f"Channel set to {channel_id}")
+            try:
+                # Check if the channel ID is a valid integer
+                channel_id_int = int(channel_id)
+                # Call the set_channel function from main.py
+                main.set_channel(channel_id)
+                self.log_message(f"Channel set to {channel_id}")
+            except ValueError:
+                # Handle invalid channel ID (not an integer)
+                self.log_message("Invalid channel ID. Please enter a numeric ID.")
+            except Exception as e:
+                # Handle other exceptions
+                self.log_message(f"Error setting channel: {e}")
+        else:
+            self.log_message("No channel ID entered.")
     
     def update_bot_status(self, status, server_count=0):
         """ Updates the bot status and server count on the GUI. """
