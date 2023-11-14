@@ -1,23 +1,45 @@
 import discord
 from discord.ext import commands
+from bot_logging import log_message, log_exception
 
 async def on_ready(bot):
-    print(f'{bot.user.name} has connected to Discord!')
-    await bot.change_presence(status=discord.Status.online, activity=discord.Game("Type !help"))
-    gui_instance.update_bot_status("Connected", len(bot.guilds))
+    try:
+        log_message(f'{bot.user.name} has connected to Discord!')
+        await bot.change_presence(status=discord.Status.online, activity=discord.Game("Type !help"))
+        gui_instance.update_bot_status("Connected", len(bot.guilds))
+    except Exception as e:
+        log_exception(e)
 
 async def on_member_join(member):
-    print(f'{member.name} has joined the server.')
+    try:
+        channel = member.guild.system_channel
+        if channel:
+            await channel.send(f'Welcome {member.mention} to {member.guild.name}!')
+        log_message(f'{member.name} has joined the server.')
+    except Exception as e:
+        log_exception(e)
 
 async def on_member_remove(member):
-    print(f'{member.name} has left the server.')
+    try:
+        channel = member.guild.system_channel
+        if channel:
+            await channel.send(f'Goodbye {member.mention} from {member.guild.name}.')
+        log_message(f'{member.name} has left the server.')
+    except Exception as e:
+        log_exception(e)
 
 async def on_message_delete(message):
-    print(f'A message by {message.author.display_name} was deleted.')
+    try:
+        log_message(f'A message by {message.author.display_name} was deleted.')
+    except Exception as e:
+        log_exception(e)
 
 async def on_message_edit(before, after):
-    if before.content != after.content:
-        print(f'Message by {before.author.display_name} was edited.')
+    try:
+        if before.content != after.content:
+            log_message(f'Message by {before.author.display_name} was edited.')
+    except Exception as e:
+        log_exception(e)
 
 def setup(bot):
     @bot.event

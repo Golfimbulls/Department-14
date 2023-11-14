@@ -19,7 +19,13 @@ def convert_to_uwu(text):
     uwu_text = uwu_text.replace("r", "w").replace("l", "w")
     # Replace 'R' and 'L' with 'W'
     uwu_text = uwu_text.replace("R", "W").replace("L", "W")
-    # Add more transformations as needed
+    # Replace 'th' with 'd' or 'f'
+    uwu_text = uwu_text.replace("th", random.choice(["d", "f"]))
+    # Add uwu faces at the end of sentences
+    uwu_text = '. '.join(sentence + random.choice([" uwu", " owo", ""]) for sentence in uwu_text.split('. '))
+    # Randomly apply transformations for a more natural feel
+    if random.choice([True, False]):
+        uwu_text = uwu_text.replace("n", "ny")
     return uwu_text
 
 async def fetch_news(url="https://www.ign.com/pc", item_selector='div.content-item', title_selector='a', max_items=5, timeout=10):
