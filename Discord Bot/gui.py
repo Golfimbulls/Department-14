@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, scrolledtext, simpledialog, filedialog, Menu, Label, Entry, Button, messagebox
+from PIL import Image, ImageTk
 import threading
 import main  # Import the main module
 import token_manager  # Import the token manager
@@ -296,7 +297,44 @@ def update_log(message):
     if gui_instance:
         gui_instance.log_message(message)
 
+def show_splash_screen():
+    splash_root = tk.Tk()
+    splash_root.overrideredirect(True)
+    splash_screen_width, splash_screen_height = 800, 400
+    splash_root.geometry(f"{splash_screen_width}x{splash_screen_height}+300+200")  # Adjust size and position as needed
+
+    # Main frame to hold image and text, with black background
+    main_frame = tk.Frame(splash_root, bg="black")
+    main_frame.pack(fill="both", expand=True)
+
+    # Load your AI-generated image
+    splash_image = Image.open("images/splash/dept14.jpg")  # Path to your splash screen image
+
+    # Resize the image while maintaining aspect ratio
+    img_width, img_height = splash_image.size
+    scaling_factor = min(splash_screen_width / img_width, splash_screen_height / img_height)
+    new_size = (int(img_width * scaling_factor), int(img_height * scaling_factor))
+    splash_image = splash_image.resize(new_size, Image.Resampling.LANCZOS)
+
+    splash_photo = ImageTk.PhotoImage(splash_image)
+
+    # Image label
+    image_label = tk.Label(main_frame, image=splash_photo, bg="black")
+    image_label.pack(side="left", fill="both", expand=True)
+
+    # Text label with green text
+    text_label = tk.Label(main_frame, text="Brought to you by Department 14", font=("Arial", 12), bg="black", fg="green")
+    text_label.pack(side="bottom", anchor="se")
+
+    # Close the splash screen after 3000 milliseconds (3 seconds)
+    splash_root.after(3000, splash_root.destroy)
+    splash_root.mainloop()
+
+    # Keep a reference to the image to prevent garbage collection
+    image_label.image = splash_photo
+
 if __name__ == "__main__":
+    show_splash_screen()  # Show the splash screen first
     gui = BotGUI()
     gui_instance = gui
     gui.mainloop()
