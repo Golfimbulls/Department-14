@@ -54,11 +54,14 @@ To build an executable version of your bot for easy distribution and execution:
    pip install pyinstaller
    ```
 
-2. **Build the Executable**
+2. **Prepare the Spec File**
+- Modify the `gui.spec` file to include all necessary files and configurations.
+
+3. **Build the Executable Using the Spec File**
 - Navigate to your project directory.
 - Run the following command:
   ```
-  pyinstaller --hidden-import=requests gui.py
+  pyinstaller gui.spec
   ```
 - This command includes the `requests` module as a hidden import, ensuring it's packaged with the executable.
 - This will create a `dist` folder in your project directory containing the `gui.exe` file.

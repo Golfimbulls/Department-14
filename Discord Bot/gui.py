@@ -4,6 +4,8 @@ from PIL import Image, ImageTk
 import threading
 import main  # Import the main module
 import token_manager  # Import the token manager
+import sys
+import os
 
 class Tooltip:
     """
@@ -296,6 +298,11 @@ gui_instance = None
 def update_log(message):
     if gui_instance:
         gui_instance.log_message(message)
+        
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
 
 def show_splash_screen():
     splash_root = tk.Tk()
@@ -308,7 +315,8 @@ def show_splash_screen():
     main_frame.pack(fill="both", expand=True)
 
     # Load your AI-generated image
-    splash_image = Image.open("images/splash/dept14.jpg")  # Path to your splash screen image
+    splash_image_path = resource_path('images/splash/dept14.jpg')
+    splash_image = Image.open(splash_image_path)
 
     # Resize the image while maintaining aspect ratio
     img_width, img_height = splash_image.size
@@ -322,9 +330,9 @@ def show_splash_screen():
     image_label = tk.Label(main_frame, image=splash_photo, bg="black")
     image_label.pack(side="left", fill="both", expand=True)
 
-    # Text label with green text
-    text_label = tk.Label(main_frame, text="Brought to you by Department 14", font=("Arial", 12), bg="black", fg="green")
-    text_label.pack(side="bottom", anchor="se")
+    # Text label with green text, positioned to the right
+    text_label = tk.Label(main_frame, text="Brought to you by Department 14", font=("Arial", 10), bg="black", fg="green")
+    text_label.pack(side="right", anchor="ne")
 
     # Close the splash screen after 3000 milliseconds (3 seconds)
     splash_root.after(3000, splash_root.destroy)
