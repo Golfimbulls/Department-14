@@ -632,6 +632,10 @@
   ('concurrent.futures.thread',
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\concurrent\\futures\\thread.py',
    'PYMODULE'),
+  ('config',
+   'C:\\Users\\RhythmicCarnage\\Documents\\GitHub\\Department-14\\Discord '
+   'Bot\\config.py',
+   'PYMODULE'),
   ('contextlib',
    'C:\\Users\\RhythmicCarnage\\AppData\\Local\\Programs\\Python\\Python310\\lib\\contextlib.py',
    'PYMODULE'),

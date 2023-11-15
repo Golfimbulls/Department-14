@@ -2,11 +2,13 @@ import discord
 from discord.ext import commands
 import commands as bot_commands
 import threading
-import bot_logging  # Import the logging module
-# import config  # Import the config module (No longer needed for LOG_CHANNEL_ID)
-import event_handlers  # Import the event handlers module
+import bot_logging
+import event_handlers
 import asyncio
-import gui  # Import the GUI module
+import gui
+
+# Import configurations from config.py
+from config import COMMAND_PREFIX, TOKEN_FILE, LOG_CHANNEL_ID
 
 # Global references
 bot = None
@@ -15,7 +17,7 @@ loop = None
 # Initialize logger
 logger = bot_logging.get_logger(__name__)
 
-def run_bot(token, log_channel_id=None):
+def run_bot(token, log_channel_id=LOG_CHANNEL_ID):  # Use LOG_CHANNEL_ID from config.py
     global bot, loop
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
@@ -25,9 +27,9 @@ def run_bot(token, log_channel_id=None):
         return
 
     intents = discord.Intents.default()
-    intents.members = True  # If you've enabled "Server Members Intent"
-    intents.message_content = True  # If you've enabled "Message Content Intent"
-    bot = commands.Bot(command_prefix='!', intents=intents)
+    intents.members = True
+    intents.message_content = True
+    bot = commands.Bot(command_prefix=COMMAND_PREFIX, intents=intents)  # Use COMMAND_PREFIX from config.py
     loop = asyncio.get_event_loop()
 
     bot_commands.register_commands(bot)
@@ -130,7 +132,11 @@ def get_server_list_sync():
 
 if __name__ == "__main__":
     try:
-        gui_thread = threading.Thread(target=start_gui, args=(run_bot,), daemon=True)
+        # Read the token from the file specified in TOKEN_FILE
+        with open(TOKEN_FILE, 'r') as file:
+            token = file.read().strip()
+
+        gui_thread = threading.Thread(target=start_gui, args=(lambda: run_bot(token),), daemon=True)
         gui_thread.start()
         gui_thread.join()
     except Exception as e:
