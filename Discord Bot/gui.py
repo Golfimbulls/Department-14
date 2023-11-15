@@ -6,6 +6,7 @@ import main  # Import the main module
 import token_manager  # Import the token manager
 import sys
 import os
+import time
 
 class Tooltip:
     """
@@ -308,17 +309,14 @@ def show_splash_screen():
     splash_root = tk.Tk()
     splash_root.overrideredirect(True)
     splash_screen_width, splash_screen_height = 800, 400
-    splash_root.geometry(f"{splash_screen_width}x{splash_screen_height}+300+200")  # Adjust size and position as needed
+    splash_root.geometry(f"{splash_screen_width}x{splash_screen_height}+300+200")
 
-    # Main frame to hold image and text, with black background
     main_frame = tk.Frame(splash_root, bg="black")
     main_frame.pack(fill="both", expand=True)
 
-    # Load your AI-generated image
     splash_image_path = resource_path('images/splash/dept14.jpg')
     splash_image = Image.open(splash_image_path)
 
-    # Resize the image while maintaining aspect ratio
     img_width, img_height = splash_image.size
     scaling_factor = min(splash_screen_width / img_width, splash_screen_height / img_height)
     new_size = (int(img_width * scaling_factor), int(img_height * scaling_factor))
@@ -326,19 +324,21 @@ def show_splash_screen():
 
     splash_photo = ImageTk.PhotoImage(splash_image)
 
-    # Image label
     image_label = tk.Label(main_frame, image=splash_photo, bg="black")
-    image_label.pack(side="left", fill="both", expand=True)
+    image_label.pack(fill="both", expand=True)
 
-    # Text label with green text, positioned to the right
-    text_label = tk.Label(main_frame, text="Brought to you by Department 14", font=("Arial", 10), bg="black", fg="green")
-    text_label.pack(side="right", anchor="ne")
+    # Initial transparency
+    splash_root.attributes("-alpha", 0)
 
-    # Close the splash screen after 3000 milliseconds (3 seconds)
+    # Fade-in effect
+    for i in range(0, 101, 5):
+        splash_root.attributes("-alpha", i/100)
+        splash_root.update()
+        time.sleep(0.05)  # Adjust the speed of the fade-in here
+
     splash_root.after(3000, splash_root.destroy)
     splash_root.mainloop()
 
-    # Keep a reference to the image to prevent garbage collection
     image_label.image = splash_photo
 
 if __name__ == "__main__":
