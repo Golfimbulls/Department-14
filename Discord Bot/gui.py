@@ -308,15 +308,26 @@ def resource_path(relative_path):
 def show_splash_screen():
     splash_root = tk.Tk()
     splash_root.overrideredirect(True)
-    splash_screen_width, splash_screen_height = 800, 400
-    splash_root.geometry(f"{splash_screen_width}x{splash_screen_height}+300+200")
 
+    # Get the screen width and height
+    screen_width = splash_root.winfo_screenwidth()
+    screen_height = splash_root.winfo_screenheight()
+    splash_screen_width, splash_screen_height = 800, 400
+
+    # Calculate position x, y
+    x = (screen_width - splash_screen_width) // 2
+    y = (screen_height - splash_screen_height) // 2
+    splash_root.geometry(f"{splash_screen_width}x{splash_screen_height}+{x}+{y}")
+
+    # Main frame to hold image
     main_frame = tk.Frame(splash_root, bg="black")
     main_frame.pack(fill="both", expand=True)
 
+    # Load your AI-generated image
     splash_image_path = resource_path('images/splash/dept14.jpg')
     splash_image = Image.open(splash_image_path)
 
+    # Resize the image while maintaining aspect ratio
     img_width, img_height = splash_image.size
     scaling_factor = min(splash_screen_width / img_width, splash_screen_height / img_height)
     new_size = (int(img_width * scaling_factor), int(img_height * scaling_factor))
@@ -324,8 +335,9 @@ def show_splash_screen():
 
     splash_photo = ImageTk.PhotoImage(splash_image)
 
+    # Image label
     image_label = tk.Label(main_frame, image=splash_photo, bg="black")
-    image_label.pack(fill="both", expand=True)
+    image_label.pack(side="top", fill="both", expand=True)
 
     # Initial transparency
     splash_root.attributes("-alpha", 0)
@@ -336,9 +348,11 @@ def show_splash_screen():
         splash_root.update()
         time.sleep(0.05)  # Adjust the speed of the fade-in here
 
+    # Close the splash screen after 3000 milliseconds (3 seconds)
     splash_root.after(3000, splash_root.destroy)
     splash_root.mainloop()
 
+    # Keep a reference to the image to prevent garbage collection
     image_label.image = splash_photo
 
 if __name__ == "__main__":
