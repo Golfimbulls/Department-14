@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    WiX Installer Configuration File for Discord Bot Application
+    ======================================================================
+    This WiX Toolset source file (.wxs) is designed to create an installer 
+    for the Discord Bot application. It defines the basic structure and 
+    components necessary for the installation process.
+
+    Key Features:
+    - Installs the Discord Bot application into the Program Files directory.
+    - Sets up a basic installer with minimal configuration.
+    - Utilizes a single feature and component model for simplicity.
+    - Designed for easy modification and expansion for additional files 
+      and configurations as needed.
+
+    Usage Notes:
+    - Update the GUIDs for 'UpgradeCode' and 'Component' with unique values.
+    - Modify the 'Source' attribute in the File element to point to the 
+      actual location of the Discord Bot executable.
+    - This file serves as a starting point and should be expanded to 
+      include more advanced installation features as per the application's 
+      requirements.
+
+    Note: This file is a part of the WiX Toolset project for the Discord Bot 
+    application and is intended for use by developers familiar with the WiX 
+    Toolset and MSI installer technologies.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+    <Product Id="*" Name="Discord Bot" Version="1.0.0" Manufacturer="Department 14" UpgradeCode="3aac4b5c-5473-40cd-81db-46bac2a045b3">
+        <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
+
+        <MajorUpgrade DowngradeErrorMessage="A newer version of Discord Bot is already installed." />
+        <MediaTemplate />
+
+        <Feature Id="ProductFeature" Title="Discord Bot" Level="1">
+            <ComponentGroupRef Id="DiscordBotFiles" />
+        </Feature>
+
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFiles6432Folder">
+                <Directory Id="INSTALLFOLDER" Name="Discord Bot">
+                    <!-- Main Application Component -->
+                    <Component Id="MainApplication" Guid="*">
+                        <!-- Main application files -->
+                        <File Id="FileBotLogging" Source="../Discord Bot/bot_logging.py" />
+                        <File Id="FileBotToken" Source="../Discord Bot/bot_token.txt" />
+                        <File Id="FileCommands" Source="../Discord Bot/commands.py" />
+                        <File Id="FileConfig" Source="../Discord Bot/config.py" />
+                        <File Id="FileDiscordLog" Source="../Discord Bot/discord.log" />
+                        <File Id="FileEventHandlers" Source="../Discord Bot/event_handlers.py" />
+                        <File Id="FileGui" Source="../Discord Bot/gui.py" />
+                        <File Id="FileLicense" Source="../Discord Bot/LICENSE.txt" />
+                        <File Id="FileMain" Source="../Discord Bot/main.py" />
+                        <File Id="FileReadme" Source="../Discord Bot/README.md" />
+                        <File Id="FileRequirements" Source="../Discord Bot/requirements.txt" />
+                        <File Id="FileTokenManager" Source="../Discord Bot/token_manager.py" />
+                    </Component>
+
+                    <!-- Images Directory -->
+                    <Directory Id="ImagesDir" Name="images">
+                        <!-- DnD Subfolder -->
+                        <Directory Id="DnDDir" Name="DnD">
+                            <Component Id="ImagesDnD" Guid="*">
+                                <!-- DnD images -->
+                                <File Id="FileDnDDefault" Source="../Discord Bot/images/DnD/default.jpg" />
+                                <File Id="FileDnDDragonborn" Source="../Discord Bot/images/DnD/Dragonborn.jpg" />
+                                <File Id="FileDnDDwarf" Source="../Discord Bot/images/DnD/Dwarf.jpg" />
+                                <File Id="FileDnDElf" Source="../Discord Bot/images/DnD/Elf.jpg" />
+                                <File Id="FileDnDGnome" Source="../Discord Bot/images/DnD/Gnome.jpg" />
+                                <File Id="FileDnDHalfElf" Source="../Discord Bot/images/DnD/Half-Elf.jpg" />
+                                <File Id="FileDnDHalfOrc" Source="../Discord Bot/images/DnD/Half-Orc.jpg" />
+                                <File Id="FileDnDHalfling" Source="../Discord Bot/images/DnD/Halfling.jpg" />
+                                <File Id="FileDnDHuman" Source="../Discord Bot/images/DnD/Human.jpg" />
+                                <File Id="FileDnDTiefling" Source="../Discord Bot/images/DnD/Tiefling.jpg" />
+                            </Component>
+                        </Directory>
+
+                        <!-- Splash Subfolder -->
+                        <Directory Id="SplashDir" Name="splash">
+                            <Component Id="ImagesSplash" Guid="*">
+                                <!-- Splash image -->
+                                <File Id="FileSplashDept14" Source="../Discord Bot/images/splash/dept14.jpg" />
+                            </Component>
+                        </Directory>
+                    </Directory>
+                </Directory>
+            </Directory>
+        </Directory>
+
+        <ComponentGroup Id="DiscordBotFiles">
+            <ComponentRef Id="MainApplication" />
+            <ComponentRef Id="ImagesDnD" />
+            <ComponentRef Id="ImagesSplash" />
+        </ComponentGroup>
+    </Product>
+</Wix>
