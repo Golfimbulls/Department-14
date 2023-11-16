@@ -50,7 +50,7 @@ exe = EXE(pyz,
           debug=False,  # Set to True for debugging
           bootloader_ignore_signals=False,
           strip=False,
-          upx=True,
+          upx=False,
           upx_exclude=[],
           runtime_tmpdir=None,
           console=True,
@@ -62,7 +62,7 @@ coll = COLLECT(exe,
                a.zipfiles,
                a.datas,
                strip=False,
-               upx=True,
+               upx=False,
                upx_exclude=[],
                name='Discord Bot Windows x64')  # Updated name for the one-folder bundle
 

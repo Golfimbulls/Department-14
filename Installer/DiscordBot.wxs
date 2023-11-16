@@ -28,7 +28,6 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
     <Product Id="*" Name="Discord Bot" Version="1.0.0" Manufacturer="Department 14" UpgradeCode="3aac4b5c-5473-40cd-81db-46bac2a045b3">
         <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
-
         <MajorUpgrade DowngradeErrorMessage="A newer version of Discord Bot is already installed." />
         <MediaTemplate />
 
@@ -41,56 +40,215 @@
                 <Directory Id="INSTALLFOLDER" Name="Discord Bot">
                     <!-- Main Application Component -->
                     <Component Id="MainApplication" Guid="*">
-                        <!-- Main application files -->
-                        <File Id="FileBotLogging" Source="../Discord Bot/bot_logging.py" />
-                        <File Id="FileBotToken" Source="../Discord Bot/bot_token.txt" />
-                        <File Id="FileCommands" Source="../Discord Bot/commands.py" />
-                        <File Id="FileConfig" Source="../Discord Bot/config.py" />
-                        <File Id="FileDiscordLog" Source="../Discord Bot/discord.log" />
-                        <File Id="FileEventHandlers" Source="../Discord Bot/event_handlers.py" />
-                        <File Id="FileGui" Source="../Discord Bot/gui.py" />
-                        <File Id="FileLicense" Source="../Discord Bot/LICENSE.txt" />
-                        <File Id="FileMain" Source="../Discord Bot/main.py" />
-                        <File Id="FileReadme" Source="../Discord Bot/README.md" />
-                        <File Id="FileRequirements" Source="../Discord Bot/requirements.txt" />
-                        <File Id="FileTokenManager" Source="../Discord Bot/token_manager.py" />
+                        <!-- Main application executable -->
+                        <File Id="DiscordBotExe" Source="Discord Bot Windows x64/Discord Bot Windows x64.exe" />
                     </Component>
 
-                    <!-- Images Directory -->
-                    <Directory Id="ImagesDir" Name="images">
-                        <!-- DnD Subfolder -->
-                        <Directory Id="DnDDir" Name="DnD">
-                            <Component Id="ImagesDnD" Guid="*">
-                                <!-- DnD images -->
-                                <File Id="FileDnDDefault" Source="../Discord Bot/images/DnD/default.jpg" />
-                                <File Id="FileDnDDragonborn" Source="../Discord Bot/images/DnD/Dragonborn.jpg" />
-                                <File Id="FileDnDDwarf" Source="../Discord Bot/images/DnD/Dwarf.jpg" />
-                                <File Id="FileDnDElf" Source="../Discord Bot/images/DnD/Elf.jpg" />
-                                <File Id="FileDnDGnome" Source="../Discord Bot/images/DnD/Gnome.jpg" />
-                                <File Id="FileDnDHalfElf" Source="../Discord Bot/images/DnD/Half-Elf.jpg" />
-                                <File Id="FileDnDHalfOrc" Source="../Discord Bot/images/DnD/Half-Orc.jpg" />
-                                <File Id="FileDnDHalfling" Source="../Discord Bot/images/DnD/Halfling.jpg" />
-                                <File Id="FileDnDHuman" Source="../Discord Bot/images/DnD/Human.jpg" />
-                                <File Id="FileDnDTiefling" Source="../Discord Bot/images/DnD/Tiefling.jpg" />
-                            </Component>
-                        </Directory>
+                    <!-- Internal Directory -->
+                    <Directory Id="InternalDir" Name="_internal">
+                            <!-- DLLs and PYDs -->
+                            <File Id="FileApiMsWinCoreConsole" Source="Discord Bot Windows x64/_internal/api-ms-win-core-console-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreDatetime" Source="Discord Bot Windows x64/_internal/api-ms-win-core-datetime-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreDebug" Source="Discord Bot Windows x64/_internal/api-ms-win-core-debug-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreErrorhandling" Source="Discord Bot Windows x64/_internal/api-ms-win-core-errorhandling-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreFileL110" Source="Discord Bot Windows x64/_internal/api-ms-win-core-file-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreFileL120" Source="Discord Bot Windows x64/_internal/api-ms-win-core-file-l1-2-0.dll" />
+                            <File Id="FileApiMsWinCoreFileL210" Source="Discord Bot Windows x64/_internal/api-ms-win-core-file-l2-1-0.dll" />
+                            <File Id="FileApiMsWinCoreHandle" Source="Discord Bot Windows x64/_internal/api-ms-win-core-handle-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreHeap" Source="Discord Bot Windows x64/_internal/api-ms-win-core-heap-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreInterlocked" Source="Discord Bot Windows x64/_internal/api-ms-win-core-interlocked-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreLibraryloader" Source="Discord Bot Windows x64/_internal/api-ms-win-core-libraryloader-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreLocalization" Source="Discord Bot Windows x64/_internal/api-ms-win-core-localization-l1-2-0.dll" />
+                            <File Id="FileApiMsWinCoreMemory" Source="Discord Bot Windows x64/_internal/api-ms-win-core-memory-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreNamedpipe" Source="Discord Bot Windows x64/_internal/api-ms-win-core-namedpipe-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreProcessenvironment" Source="Discord Bot Windows x64/_internal/api-ms-win-core-processenvironment-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreProcessthreadsL110" Source="Discord Bot Windows x64/_internal/api-ms-win-core-processthreads-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreProcessthreadsL111" Source="Discord Bot Windows x64/_internal/api-ms-win-core-processthreads-l1-1-1.dll" />
+                            <File Id="FileApiMsWinCoreProfile" Source="Discord Bot Windows x64/_internal/api-ms-win-core-profile-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreRtlsupport" Source="Discord Bot Windows x64/_internal/api-ms-win-core-rtlsupport-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreString" Source="Discord Bot Windows x64/_internal/api-ms-win-core-string-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreSynchL110" Source="Discord Bot Windows x64/_internal/api-ms-win-core-synch-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreSynchL120" Source="Discord Bot Windows x64/_internal/api-ms-win-core-synch-l1-2-0.dll" />
+                            <File Id="FileApiMsWinCoreSysinfo" Source="Discord Bot Windows x64/_internal/api-ms-win-core-sysinfo-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreTimezone" Source="Discord Bot Windows x64/_internal/api-ms-win-core-timezone-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCoreUtil" Source="Discord Bot Windows x64/_internal/api-ms-win-core-util-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtConio" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-conio-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtConvert" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-convert-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtEnvironment" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-environment-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtFilesystem" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-filesystem-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtHeap" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-heap-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtLocale" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-locale-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtMath" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-math-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtProcess" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-process-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtRuntime" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-runtime-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtStdio" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-stdio-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtString" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-string-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtTime" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-time-l1-1-0.dll" />
+                            <File Id="FileApiMsWinCrtUtility" Source="Discord Bot Windows x64/_internal/api-ms-win-crt-utility-l1-1-0.dll" />
 
-                        <!-- Splash Subfolder -->
-                        <Directory Id="SplashDir" Name="splash">
-                            <Component Id="ImagesSplash" Guid="*">
-                                <!-- Splash image -->
-                                <File Id="FileSplashDept14" Source="../Discord Bot/images/splash/dept14.jpg" />
+                            <File Id="FilePython310Dll" Source="Discord Bot Windows x64/_internal/python310.dll" />
+                            <File Id="FileAsyncioPyd" Source="Discord Bot Windows x64/_internal/_asyncio.pyd" />
+                            <File Id="FileBz2Pyd" Source="Discord Bot Windows x64/_internal/_bz2.pyd" />
+                            <File Id="FileCtypesPyd" Source="Discord Bot Windows x64/_internal/_ctypes.pyd" />
+                            <File Id="FileDecimalPyd" Source="Discord Bot Windows x64/_internal/_decimal.pyd" />
+                            <File Id="FileHashlibPyd" Source="Discord Bot Windows x64/_internal/_hashlib.pyd" />
+                            <File Id="FileLzmaPyd" Source="Discord Bot Windows x64/_internal/_lzma.pyd" />
+                            <File Id="FileMultiprocessingPyd" Source="Discord Bot Windows x64/_internal/_multiprocessing.pyd" />
+                            <File Id="FileOverlappedPyd" Source="Discord Bot Windows x64/_internal/_overlapped.pyd" />
+                            <File Id="FileQueuePyd" Source="Discord Bot Windows x64/_internal/_queue.pyd" />
+                            <File Id="FileSocketPyd" Source="Discord Bot Windows x64/_internal/_socket.pyd" />
+                            <File Id="FileSslPyd" Source="Discord Bot Windows x64/_internal/_ssl.pyd" />
+                            <File Id="FileTkinterPyd" Source="Discord Bot Windows x64/_internal/_tkinter.pyd" />
+                            <File Id="FileUuidPyd" Source="Discord Bot Windows x64/_internal/_uuid.pyd" />
+                            <!-- Base Library Zip -->
+                            <File Id="FileBaseLibraryZip" Source="Discord Bot Windows x64/_internal/base_library.zip" />
+                            <!-- Other files in _internal directory -->
+                            <File Id="FileLibCrypto" Source="Discord Bot Windows x64/_internal/libcrypto-1_1.dll" />
+                            <File Id="FileLibFfi" Source="Discord Bot Windows x64/_internal/libffi-7.dll" />
+                            <File Id="FileLibSsl" Source="Discord Bot Windows x64/_internal/libssl-1_1.dll" />
+                            <File Id="FilePyexpatPyd" Source="Discord Bot Windows x64/_internal/pyexpat.pyd" />
+                            <File Id="FileSelectPyd" Source="Discord Bot Windows x64/_internal/select.pyd" />
+                            <File Id="FileTcl86tDll" Source="Discord Bot Windows x64/_internal/tcl86t.dll" />
+                            <File Id="FileTk86tDll" Source="Discord Bot Windows x64/_internal/tk86t.dll" />
+                            <File Id="FileUcrtbaseDll" Source="Discord Bot Windows x64/_internal/ucrtbase.dll" />
+                            <File Id="FileUnicodedataPyd" Source="Discord Bot Windows x64/_internal/unicodedata.pyd" />
+                            <File Id="FileVCRuntime140" Source="Discord Bot Windows x64/_internal/VCRUNTIME140.dll" />
+
+                            <!-- Images Directory -->
+                            <Directory Id="ImagesDir" Name="images">
+                                <!-- DnD Subdirectory -->
+                                <Directory Id="DnDDir" Name="DnD">
+                                    <Component Id="ComponentDnDDefault" Guid="*">
+                                        <File Id="FileDnDDefault" Source="Discord Bot Windows x64/_internal/images/DnD/default.jpg" KeyPath="yes"/>
+                                    </Component>
+                                    <Component Id="ComponentDnDDragonborn" Guid="*">
+                                        <File Id="FileDnDDragonborn" Source="Discord Bot Windows x64/_internal/images/DnD/Dragonborn.jpg" KeyPath="yes"/>
+                                    </Component>
+                                    <Component Id="ComponentDnDDwarf" Guid="*">
+                                        <File Id="FileDnDDwarf" Source="Discord Bot Windows x64/_internal/images/DnD/Dwarf.jpg" KeyPath="yes"/>
+                                    </Component>
+                                    <Component Id="ComponentDnDElf" Guid="*">
+                                        <File Id="FileDnDElf" Source="Discord Bot Windows x64/_internal/images/DnD/Elf.jpg" KeyPath="yes"/>
+                                    </Component>
+                                    <Component Id="ComponentDnDGnome" Guid="*">
+                                        <File Id="FileDnDGnome" Source="Discord Bot Windows x64/_internal/images/DnD/Gnome.jpg" KeyPath="yes"/>
+                                    </Component>
+                                    <Component Id="ComponentDnDHalfElf" Guid="*">
+                                        <File Id="FileDnDHalfElf" Source="Discord Bot Windows x64/_internal/images/DnD/Half-Elf.jpg" KeyPath="yes"/>
+                                    </Component>
+                                    <Component Id="ComponentDnDHalfOrc" Guid="*">
+                                        <File Id="FileDnDHalfOrc" Source="Discord Bot Windows x64/_internal/images/DnD/Half-Orc.jpg" KeyPath="yes"/>
+                                    </Component>
+                                    <Component Id="ComponentDnDHalfling" Guid="*">
+                                        <File Id="FileDnDHalfling" Source="Discord Bot Windows x64/_internal/images/DnD/Halfling.jpg" KeyPath="yes"/>
+                                    </Component>
+                                    <Component Id="ComponentDnDHuman" Guid="*">
+                                        <File Id="FileDnDHuman" Source="Discord Bot Windows x64/_internal/images/DnD/Human.jpg" KeyPath="yes"/>
+                                    </Component>
+                                    <Component Id="ComponentDnDTiefling" Guid="*">
+                                        <File Id="FileDnDTiefling" Source="Discord Bot Windows x64/_internal/images/DnD/Tiefling.jpg" KeyPath="yes"/>
+                                    </Component>
+                                </Directory>
+
+                                <!-- Splash Subdirectory -->
+                                <Directory Id="SplashDir" Name="splash">
+                                    <Component Id="ComponentSplashDept14" Guid="*">
+                                        <File Id="FileSplashDept14" Source="Discord Bot Windows x64/_internal/images/splash/dept14.jpg" KeyPath="yes"/>
+                                    </Component>
+                                </Directory>
+                            </Directory>
+                        </Component>
+
+                        <!-- Python Packages Directories -->
+                        <!-- (Include all necessary directories and files from the Python packages here) -->
+                        <!-- aiohttp Directory -->
+                        <Directory Id="AiohttpDir" Name="aiohttp">
+                            <Component Id="ComponentHelpersPyd" Guid="*">
+                                <File Id="FileHelpersPyd" Source="Discord Bot Windows x64/_internal/aiohttp/_helpers.cp310-win_amd64.pyd" KeyPath="yes"/>
+                            </Component>
+                            <Component Id="ComponentHttpParserPyd" Guid="*">
+                                <File Id="FileHttpParserPyd" Source="Discord Bot Windows x64/_internal/aiohttp/_http_parser.cp310-win_amd64.pyd" KeyPath="yes"/>
+                            </Component>
+                            <Component Id="ComponentHttpWriterPyd" Guid="*">
+                                <File Id="FileHttpWriterPyd" Source="Discord Bot Windows x64/_internal/aiohttp/_http_writer.cp310-win_amd64.pyd" KeyPath="yes"/>
+                            </Component>
+                            <Component Id="ComponentWebsocketPyd" Guid="*">
+                                <File Id="FileWebsocketPyd" Source="Discord Bot Windows x64/_internal/aiohttp/_websocket.cp310-win_amd64.pyd" KeyPath="yes"/>
                             </Component>
                         </Directory>
+                        <!-- ... other Python package directories ... -->
                     </Directory>
                 </Directory>
             </Directory>
         </Directory>
 
+        <Directory Id="aiohttp" Name="aiohttp">
+            <!-- Components for aiohttp go here -->
+        </Directory>
+    
+        <Directory Id="attrs-23.1.0.dist-info" Name="attrs-23.1.0.dist-info">
+            <!-- Components for attrs-23.1.0.dist-info go here -->
+        </Directory>
+    
+        <Directory Id="certifi" Name="certifi">
+            <!-- Components for certifi go here -->
+        </Directory>
+    
+        <Directory Id="charset_normalizer" Name="charset_normalizer">
+            <!-- Components for charset_normalizer go here -->
+        </Directory>
+    
+        <Directory Id="frozenlist" Name="frozenlist">
+            <!-- Components for frozenlist go here -->
+        </Directory>
+    
+        <Directory Id="images" Name="images">
+            <!-- Components for images go here -->
+        </Directory>
+    
+        <Directory Id="multidict" Name="multidict">
+            <!-- Components for multidict go here -->
+        </Directory>
+    
+        <Directory Id="PIL" Name="PIL">
+            <!-- Components for PIL go here -->
+        </Directory>
+    
+        <Directory Id="tcl" Name="tcl">
+            <!-- Components for tcl go here -->
+        </Directory>
+    
+        <Directory Id="tcl8" Name="tcl8">
+            <!-- Components for tcl8 go here -->
+        </Directory>
+    
+        <Directory Id="tk" Name="tk">
+            <!-- Components for tk go here -->
+        </Directory>
+    
+        <Directory Id="yarl" Name="yarl">
+            <!-- Components for yarl go here -->
+        </Directory>
+    
+
+        <Component Id="api_ms_win_core_console_l1_1_0_dll" Guid="*">
+            <File Id="api_ms_win_core_console_l1_1_0_dll" Source="path\to\api-ms-win-core-console-l1-1-0.dll" KeyPath="yes"/>
+        </Component>
+    
+        <Component Id="api_ms_win_core_datetime_l1_1_0_dll" Guid="*">
+            <File Id="api_ms_win_core_datetime_l1_1_0_dll" Source="path\to\api-ms-win-core-datetime-l1-1-0.dll" KeyPath="yes"/>
+        </Component>
+    
+        <Component Id="_uuid_pyd" Guid="*">
+            <File Id="_uuid_pyd" Source="path\to\_uuid.pyd" KeyPath="yes"/>
+        </Component>
+    
+
+
         <ComponentGroup Id="DiscordBotFiles">
             <ComponentRef Id="MainApplication" />
-            <ComponentRef Id="ImagesDnD" />
-            <ComponentRef Id="ImagesSplash" />
+            <ComponentRef Id="InternalFiles" />
+            <!-- Add ComponentRefs for other components as needed -->
         </ComponentGroup>
     </Product>
 </Wix>
