@@ -55,18 +55,22 @@ To build an executable version of your bot for easy distribution and execution:
    ```
 
 2. **Prepare the Spec File**
-- Modify the `gui.spec` file to include all necessary files and configurations.
+- Modify the `windowsx64.spec` file to include all necessary files and configurations.
 
 3. **Build the Executable Using the Spec File**
 - Navigate to your project directory.
 - Run the following command:
   ```
-  pyinstaller gui.spec
+  pyinstaller windowsx64.spec
   ```
-- This command includes the `requests` module as a hidden import, ensuring it's packaged with the executable.
-- This will create a `dist` folder in your project directory containing the `gui.exe` file.
+  - For macOS, run the following command:
+    ```
+  pyinstaller macOS.spec
+  ```
+- These commands include the `requests` module as a hidden import, ensuring it's packaged with the executable.
+- This will create a `dist` folder in your project directory containing the executable file (`Discord Bot Windows x64.exe` for Windows or `Discord Bot macOS.app` for macOS).
 
-3. **Run the Executable**
+4. **Run the Executable**
 - You can now run your bot using the executable file in the `dist` folder.
 
 ## Features
