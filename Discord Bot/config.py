@@ -3,7 +3,7 @@
 # Discord Bot Configuration
 # -------------------------
 COMMAND_PREFIX = '!'  # Prefix for commands. This is used to recognize bot commands in messages.
-TOKEN_FILE = 'token.txt'  # File name where the Discord bot token is stored. Ensure this file is secured and not tracked in version control.
+TOKEN_FILE = 'bot_token.txt'  # File name where the Discord bot token is stored. Ensure this file is secured and not tracked in version control.
 
 # Logging Configuration
 # ---------------------
