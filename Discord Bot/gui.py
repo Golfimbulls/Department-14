@@ -183,7 +183,34 @@ class BotGUI(tk.Tk):
         pass  # Logic to open documentation
 
     def open_about(self):
-        pass  # Logic to display information about the application
+        about_text = """
+        Discord Bot Control Panel
+        Version: 1.0.0
+        Developed by: Your Name or Your Organization's Name
+
+        Description:
+        This Discord bot is designed for gaming communities, offering features like dice rolling, character generation for D&D, game session scheduling, polls, game statistics, and the latest gaming news.
+
+        Features:
+        - Dice rolling with `!roll` command.
+        - Random D&D character generation with `!character` command.
+        - Game session scheduling with `!schedule` command.
+        - Simple yes/no polls with `!poll` command.
+        - Game statistics and latest gaming news.
+
+        For more information, source code, and contributions, visit:
+        https://github.com/Golfimbulls/Department-14
+
+        Contact:
+        If you have questions or want to reach out, contact <your_email>.
+
+        Acknowledgments:
+        - Contributors to this project.
+        - Special thanks to [OpenAI](https://openai.com/) for language model assistance.
+    
+        Licensed under the MIT License.
+        """
+        messagebox.showinfo("About", about_text)
     
     def update_performance_metrics(self):
         # Calculate uptime
