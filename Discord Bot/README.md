@@ -11,8 +11,10 @@ Before you begin, ensure you have met the following requirements:
 ## Installation
 
 1. **Clone the Repository**
-git clone https://github.com/your-username/your-project-name.git
-cd your-project-name
+   ```
+   git clone https://github.com/your-username/your-project-name.git
+   cd your-project-name
+   ```
 
 2. **Set Up a Virtual Environment (Optional but Recommended)**
 - Windows:
@@ -27,26 +29,49 @@ cd your-project-name
   ```
 
 3. **Install Dependencies**
-pip install -r requirements.txt
-
-4. **Add Your Discord Bot Token**
-- Create a file named `.env` in the root directory.
-- Add your bot token in the file:
-  ```
-  DISCORD_TOKEN=your_bot_token_here
-  ```
+   ```
+   pip install -r requirements.txt
+   ```
 
 ## Usage
 
 1. **Start the Bot**
 - Run the bot using the following command:
   ```
-  python main.py
+  python gui.py
   ```
+- This command starts the bot through the GUI interface.
 
 2. **Using the Bot in Discord**
 - Invite the bot to your Discord server.
 - Use the bot commands in your server. For example, type `!roll 2d6` to roll two six-sided dice.
+
+## Building an Executable
+To build an executable version of your bot for easy distribution and execution:
+
+1. **Install PyInstaller**
+   ```
+   pip install pyinstaller
+   ```
+
+2. **Prepare the Spec File**
+- Modify the `windowsx64.spec` file to include all necessary files and configurations.
+
+3. **Build the Executable Using the Spec File**
+- Navigate to your project directory.
+- Run the following command:
+  ```
+  pyinstaller windowsx64.spec
+  ```
+  - For macOS, run the following command:
+    ```
+  pyinstaller macOS.spec
+  ```
+- These commands include the `requests` module as a hidden import, ensuring it's packaged with the executable.
+- This will create a `dist` folder in your project directory containing the executable file (`Discord Bot Windows x64.exe` for Windows or `Discord Bot macOS.app` for macOS).
+
+4. **Run the Executable**
+- You can now run your bot using the executable file in the `dist` folder.
 
 ## Features
 - Dice rolling with `!roll` command.
@@ -65,12 +90,13 @@ Contributions to this project are welcome. Please follow these steps:
 4. Push to the original branch: `git push origin <project_name>/<location>`.
 5. Create the pull request.
 
+Alternatively, see the GitHub documentation on [creating a pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
-If you have any questions or want to reach out, contact me at https://discord.gg/eWp5GCTVUy
+If you have any questions or want to reach out, contact me at `<your_email>`.
 
 ## Acknowledgments
 - Thanks to everyone who has contributed to this project.

@@ -1,59 +1,39 @@
-import discord
-from discord.ext import commands
-import commands as bot_commands
 import threading
-import gui  # Import the GUI module
-import bot_logging  # Import the logging module
-import config  # Import the config module
-import event_handlers  # Import the event handlers module
+import gui
+import os
+import bot_runner
+import bot_logging
+import token_manager
 
-def run_bot(token):
-    # Ensure the token is not None or empty
-    if not token:
-        print("No token provided. Exiting.")
-        return
+def run_bot_thread(token):
+    """Run the bot in a separate thread."""
+    bot_thread = threading.Thread(target=bot_runner.run_bot, args=(token,), daemon=True)
+    bot_thread.start()
 
-    # Set up the bot with intents
-    intents = discord.Intents.default()
-    intents.members = True
-    intents.messages = True
-    intents.message_content = True
+def main():
+    # Initialize logger
+    logger = bot_logging.get_logger(__name__)
 
-    bot = commands.Bot(command_prefix='!', intents=intents)
+    # Display the splash screen first
+    gui.show_splash_screen()
 
-    # Register commands from commands.py
-    bot_commands.register_commands(bot)
+    # Initialize the GUI
+    gui_app = gui.BotGUI()
 
-    # Register event handlers from event_handlers.py
-    event_handlers.setup(bot)
+    # Check if the token file exists and read the token
+    token = None
+    if os.path.exists(token_manager.TOKEN_FILE):
+        with open(token_manager.TOKEN_FILE, 'r') as file:
+            token = file.read().strip()
 
-    @bot.event
-    async def on_ready():
-        try:
-            log_channel = bot.get_channel(config.LOG_CHANNEL_ID)
-            if log_channel:
-                await log_channel.send(f'{bot.user.name} has connected to Discord!')
-            else:
-                raise ValueError("Log channel not found. Please check the LOG_CHANNEL_ID in config.py.")
-        except Exception as e:
-            print(f"Error in on_ready: {e}")
+    # Start the bot in a separate thread if token exists
+    if token:
+        run_bot_thread(token)
+    else:
+        logger.error("Token not set. Please set the token using the GUI.")
 
-    # Run the bot
-    try:
-        bot.run(token)
-    except Exception as e:
-        print(f"Error running bot: {e}")
-
-def start_gui(run_bot_callback):
-    global gui_instance
-    gui_instance = gui.BotGUI(run_bot_callback)
-    gui_instance.mainloop()
+    # Run the GUI's main loop in the main thread
+    gui_app.mainloop()
 
 if __name__ == "__main__":
-    try:
-        # Pass the run_bot function as a callback to the GUI
-        gui_thread = threading.Thread(target=start_gui, args=(run_bot,), daemon=True)
-        gui_thread.start()
-        gui_thread.join()
-    except Exception as e:
-        print(f"Error starting GUI thread: {e}")
+    main()
